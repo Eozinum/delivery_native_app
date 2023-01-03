@@ -9,5 +9,26 @@ export const initialData = {
   CitySender: '',
   CargoDescriptionString: '',
 };
+
+export const PHONE_MASK = [
+  '(',
+  '3',
+  '8',
+  /\d/,
+  ')',
+  ' ',
+  /\d/,
+  /\d/,
+  ' ',
+  /\d/,
+  /\d/,
+  /\d/,
+  ' ',
+  /\d/,
+  /\d/,
+  /\d/,
+  /\d/,
+];
+
 export const PHONE = '380638614197';
 export const TTN = '20450620932104';

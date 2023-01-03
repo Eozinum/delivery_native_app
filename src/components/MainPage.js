@@ -1,54 +1,84 @@
+/* eslint-disable no-shadow */
 import React, {useState} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
-import {Button} from 'react-native-paper';
-import {useTtnInfo} from '../hooks/useTtnInfo';
-import {initialData, PHONE, TTN} from '../constants/constants';
-import {fontSizes, spacing} from '../constants/sizes';
-import {TtnInfo} from '../components/TtnInfo';
+import {View, StyleSheet, Text, SafeAreaView} from 'react-native';
+import {ToggleButton} from 'react-native-paper';
+import {spacing} from '../constants/sizes';
+import {CheckTtn} from './CheckTtn';
+import {Departments} from './Departments';
 
 export const MainPage = () => {
-  const [renderData, setRenderData] = useState(initialData);
-  const [isShownInfo, setIsShownInfo] = useState(false);
+  const [isLeftActive, setIsLeftActive] = useState(true);
+  const [isRightActive, setIsRightActive] = useState(false);
+  const [value, setValue] = useState('left');
 
-  const handlePress = () => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useTtnInfo(TTN, PHONE).then(data => {
-      setRenderData(data);
-      setIsShownInfo(true);
-    });
+  const handleTogglePress = () => {
+    setIsLeftActive(isLeftActive ? false : true);
+    setIsRightActive(isRightActive ? false : true);
   };
 
   return (
-    <>
-      <View style={styles.headerContainer}>
-        <Text style={styles.header}>Package info</Text>
-      </View>
-      <Button
-        style={styles.button}
-        onPress={handlePress}
-        mode="contained"
-        buttonColor="#f44336">
-        Get info
-      </Button>
-      {isShownInfo && <TtnInfo renderData={renderData} />}
-    </>
+    <SafeAreaView>
+      <ToggleButton.Row
+        style={styles.toggleContainer}
+        onValueChange={value => setValue(value)}
+        value={value}>
+        <ToggleButton
+          isActive={isLeftActive}
+          style={isLeftActive ? styles.toggleActive : styles.toggleNotActive}
+          onPress={handleTogglePress}
+          icon={() => (
+            <View>
+              <Text style={isLeftActive ? styles.whiteText : styles.greyText}>
+                Check TTN Info
+              </Text>
+            </View>
+          )}
+          value="left"
+        />
+        <ToggleButton
+          style={isRightActive ? styles.toggleActive : styles.toggleNotActive}
+          isActive={isRightActive}
+          onPress={handleTogglePress}
+          icon={() => (
+            <View>
+              <Text style={isRightActive ? styles.whiteText : styles.greyText}>
+                Departments
+              </Text>
+            </View>
+          )}
+          value="right"
+        />
+      </ToggleButton.Row>
+      {isLeftActive ? <CheckTtn /> : <Departments />}
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  header: {
-    fontWeight: 'bold',
-    fontSize: fontSizes.lg,
-    textAlign: 'center',
-  },
-  headerContainer: {
-    alignItems: 'center',
-    flex: 0.2,
-    margin: spacing.lg,
-  },
-  button: {
-    marginHorizontal: 100,
+  toggle: {
+    width: 150,
     borderRadius: spacing.sm,
-    fontSize: fontSizes.xxl,
+  },
+  toggleActive: {
+    width: 150,
+    borderRadius: spacing.sm,
+    borderColor: '#f44336',
+    backgroundColor: '#f44336',
+  },
+  toggleNotActive: {
+    width: 150,
+    borderRadius: spacing.sm,
+    borderColor: 'black',
+    backgroundColor: 'white',
+  },
+  toggleContainer: {
+    marginVertical: 40,
+    justifyContent: 'center',
+  },
+  whiteText: {
+    color: '#fff',
+  },
+  greyText: {
+    color: 'grey',
   },
 });

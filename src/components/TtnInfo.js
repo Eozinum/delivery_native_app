@@ -5,7 +5,6 @@ import {fontSizes, spacing} from '../constants/sizes';
 export const TtnInfo = ({renderData}) => {
   const {
     Status,
-    RecipientFullName,
     AnnouncedPrice,
     SenderFullNameEW,
     CityRecipient,
@@ -15,9 +14,6 @@ export const TtnInfo = ({renderData}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.row}>
-        Recipient: <Text style={styles.data}>{RecipientFullName}</Text>
-      </Text>
       <Text style={styles.row}>
         Status: <Text style={styles.data}>{Status}</Text>
       </Text>
@@ -43,7 +39,6 @@ export const TtnInfo = ({renderData}) => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: spacing.md,
-    flex: 1,
   },
   row: {
     fontWeight: 'bold',
