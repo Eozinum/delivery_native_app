@@ -38,7 +38,7 @@ export const TtnInfo = ({renderData}) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: spacing.lg,
   },
   row: {
     fontWeight: 'bold',

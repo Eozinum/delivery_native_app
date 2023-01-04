@@ -29,6 +29,3 @@ export const PHONE_MASK = [
   /\d/,
   /\d/,
 ];
-
-export const PHONE = '380638614197';
-export const TTN = '20450620932104';

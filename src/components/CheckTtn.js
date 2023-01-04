@@ -1,14 +1,15 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
+import {View, Keyboard, Text, StyleSheet, SafeAreaView} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import {TtnInfo} from './TtnInfo';
 import {initialData, PHONE_MASK} from '../constants/constants';
+import {spacing, fontSizes} from '../constants/sizes';
 import {useTtnInfo} from '../hooks/useTtnInfo';
 import {Formik} from 'formik';
 import MaskInput from 'react-native-mask-input';
-import {Masks, useMaskedInputProps} from 'react-native-mask-input';
+import {colors} from '../constants/colors';
 import * as Yup from 'yup';
 
 export const CheckTtn = () => {
@@ -33,12 +34,14 @@ export const CheckTtn = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useTtnInfo(ttn, phoneNum).then(data => {
       setRenderData(data);
-      console.log(phoneNum);
       setIsShownInfo(true);
     });
   };
   return (
-    <SafeAreaView>
+    <>
+      <View style={styles.headerContainer}>
+        <Text style={styles.header}>Package Info</Text>
+      </View>
       <Formik
         validationSchema={validation}
         initialValues={{numberTtn: '', phone: ''}}
@@ -46,24 +49,19 @@ export const CheckTtn = () => {
           setNumberTtn(numberTtn);
           setPhone(phone);
           handlePress(numberTtn, phone);
+          Keyboard.dismiss();
         }}>
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          errors,
-          setFieldValue,
-          values,
-        }) => {
-          console.log(values);
+        {({handleChange, handleSubmit, errors, values}) => {
           const onPhoneChange = handleChange('phone');
+          console.log(errors);
           return (
             <View>
               <TextInput
                 mode="outlined"
-                outlineColor="gray"
-                selectionColor="#e5192e"
-                activeOutlineColor="#e5192e"
+                theme={{roundness: spacing.sm}}
+                outlineColor={colors.lightGray}
+                selectionColor={colors.red}
+                activeOutlineColor={colors.red}
                 maxLength={14}
                 style={styles.input}
                 keyboardType="numeric"
@@ -71,14 +69,17 @@ export const CheckTtn = () => {
                 onChangeText={handleChange('numberTtn')}
                 value={values.numberTtn}
               />
-              {errors.numberTtn && <Text>{errors.numberTtn}</Text>}
+              {errors.numberTtn && (
+                <Text style={styles.error}>{errors.numberTtn}</Text>
+              )}
 
               <TextInput
                 style={styles.input}
+                theme={{roundness: spacing.sm}}
                 mode="outlined"
-                outlineColor="gray"
-                selectionColor="#e5192e"
-                activeOutlineColor="#e5192e"
+                outlineColor={colors.lightGray}
+                selectionColor={colors.red}
+                activeOutlineColor={colors.red}
                 keyboardType="numeric"
                 label="Enter phone number"
                 render={props => (
@@ -93,14 +94,15 @@ export const CheckTtn = () => {
                 value={values.phone}
               />
 
-              {errors.phone && <Text>{errors.phone}</Text>}
+              {errors.phone && <Text style={styles.error}>{errors.phone}</Text>}
 
               <View style={styles.buttonWrapper}>
                 <Button
-                  textColor="#fff"
+                  textColor={colors.white}
+                  labelStyle={styles.buttonLabel}
                   style={styles.button}
                   onPress={handleSubmit}>
-                  Get Info
+                  Show Info
                 </Button>
               </View>
             </View>
@@ -108,23 +110,38 @@ export const CheckTtn = () => {
         }}
       </Formik>
       {isShownInfo && <TtnInfo renderData={renderData} />}
-    </SafeAreaView>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   input: {
-    marginHorizontal: 20,
-    marginTop: 20,
+    marginHorizontal: spacing.lg,
+    marginTop: spacing.sm,
   },
   button: {
     width: 200,
-    backgroundColor: '#e5192e',
-    color: '#fff',
-    borderRadius: 8,
+    backgroundColor: colors.red,
+    color: colors.white,
+    borderRadius: spacing.sm,
+  },
+  buttonLabel: {
+    fontSize: fontSizes.md,
   },
   buttonWrapper: {
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: spacing.lg,
+  },
+  error: {
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
+    color: colors.red,
+  },
+  headerContainer: {
+    alignItems: 'center',
+  },
+  header: {
+    fontSize: 18,
+    fontWeight: '600',
   },
 });

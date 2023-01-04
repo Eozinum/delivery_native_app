@@ -1,8 +1,9 @@
 /* eslint-disable no-shadow */
 import React, {useState} from 'react';
-import {View, StyleSheet, Text, SafeAreaView} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import {ToggleButton} from 'react-native-paper';
-import {spacing} from '../constants/sizes';
+import {spacing, fontSizes} from '../constants/sizes';
+import {colors} from '../constants/colors';
 import {CheckTtn} from './CheckTtn';
 import {Departments} from './Departments';
 
@@ -17,7 +18,7 @@ export const MainPage = () => {
   };
 
   return (
-    <SafeAreaView>
+    <>
       <ToggleButton.Row
         style={styles.toggleContainer}
         onValueChange={value => setValue(value)}
@@ -50,7 +51,7 @@ export const MainPage = () => {
         />
       </ToggleButton.Row>
       {isLeftActive ? <CheckTtn /> : <Departments />}
-    </SafeAreaView>
+    </>
   );
 };
 
@@ -62,23 +63,27 @@ const styles = StyleSheet.create({
   toggleActive: {
     width: 150,
     borderRadius: spacing.sm,
-    borderColor: '#f44336',
-    backgroundColor: '#f44336',
+    backgroundColor: colors.red,
   },
   toggleNotActive: {
     width: 150,
     borderRadius: spacing.sm,
     borderColor: 'black',
-    backgroundColor: 'white',
+
+    backgroundColor: colors.white,
   },
   toggleContainer: {
-    marginVertical: 40,
+    marginVertical: spacing.md,
     justifyContent: 'center',
   },
   whiteText: {
-    color: '#fff',
+    color: colors.white,
+    fontSize: fontSizes.md,
+    fontWeight: '500',
   },
   greyText: {
-    color: 'grey',
+    color: '#626468',
+    fontSize: fontSizes.md,
+    fontWeight: '500',
   },
 });
