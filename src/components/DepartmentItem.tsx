@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {spacing, fontSizes} from '../constants/sizes';
 
-export const DepartmentItem = ({department}) => (
+export const DepartmentItem = ({department}: any) => (
   <View style={styles.item}>
     <Text style={styles.title}>{department}</Text>
   </View>
@@ -10,7 +10,7 @@ export const DepartmentItem = ({department}) => (
 
 const styles = StyleSheet.create({
   item: {
-    paddingTop: spacing.md,
+    paddingBottom: spacing.md,
   },
   title: {
     fontSize: fontSizes.md,

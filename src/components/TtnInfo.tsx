@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {fontSizes, spacing} from '../constants/sizes';
 
-export const TtnInfo = ({renderData}) => {
+export const TtnInfo = ({renderData}: any) => {
   const {
     Status,
     AnnouncedPrice,

@@ -68,8 +68,6 @@ const styles = StyleSheet.create({
   toggleNotActive: {
     width: 150,
     borderRadius: spacing.sm,
-    borderColor: 'black',
-
     backgroundColor: colors.white,
   },
   toggleContainer: {
@@ -82,7 +80,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   greyText: {
-    color: '#626468',
+    color: colors.gray,
     fontSize: fontSizes.md,
     fontWeight: '500',
   },

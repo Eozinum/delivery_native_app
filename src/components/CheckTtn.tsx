@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-shadow */
 import React, {useState} from 'react';
-import {View, Keyboard, Text, StyleSheet, SafeAreaView} from 'react-native';
+import {View, Keyboard, Text, StyleSheet} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import {TtnInfo} from './TtnInfo';
 import {initialData, PHONE_MASK} from '../constants/constants';
@@ -15,8 +13,6 @@ import * as Yup from 'yup';
 export const CheckTtn = () => {
   const [renderData, setRenderData] = useState(initialData);
   const [isShownInfo, setIsShownInfo] = useState(false);
-  const [numberTtn, setNumberTtn] = useState('');
-  const [phone, setPhone] = useState('');
 
   const validation = Yup.object({
     numberTtn: Yup.string()
@@ -30,7 +26,7 @@ export const CheckTtn = () => {
       .required('Enter your phone'),
   });
 
-  const handlePress = (ttn, phoneNum) => {
+  const handlePress = (ttn: string, phoneNum: string) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useTtnInfo(ttn, phoneNum).then(data => {
       setRenderData(data);
@@ -46,14 +42,11 @@ export const CheckTtn = () => {
         validationSchema={validation}
         initialValues={{numberTtn: '', phone: ''}}
         onSubmit={({numberTtn, phone}) => {
-          setNumberTtn(numberTtn);
-          setPhone(phone);
           handlePress(numberTtn, phone);
           Keyboard.dismiss();
         }}>
         {({handleChange, handleSubmit, errors, values}) => {
           const onPhoneChange = handleChange('phone');
-          console.log(errors);
           return (
             <View>
               <TextInput

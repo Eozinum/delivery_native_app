@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 import React, {useState} from 'react';
 import {Keyboard, View, Text, StyleSheet, FlatList} from 'react-native';
 import {useDepartments} from '../hooks/useDepartments';
@@ -10,12 +11,14 @@ import {TextInput, Button} from 'react-native-paper';
 
 export const Departments = () => {
   const [departments, setDepartments] = useState([]);
+
   const validation = Yup.object({
     cityName: Yup.string()
       .matches(/^[а-яА-Я]*$/, 'Enter valid city name!')
       .required('Enter city'),
   });
-  const handlePress = city => {
+
+  const handlePress = (city: string) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useDepartments(city).then(data => {
       setDepartments(data);
@@ -23,7 +26,7 @@ export const Departments = () => {
     });
   };
 
-  const renderItem = ({item}) => (
+  const renderItem = ({item}: any) => (
     <DepartmentItem department={`✧ ${item.Description}`} />
   );
 
@@ -68,7 +71,7 @@ export const Departments = () => {
         style={styles.list}
         data={departments}
         renderItem={renderItem}
-        keyExtractor={item => item.SiteKey}
+        keyExtractor={item => item['SiteKey']}
       />
     </>
   );
